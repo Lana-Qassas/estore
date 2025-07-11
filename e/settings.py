@@ -9,24 +9,25 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+import os
+import dj_database_url
+from dotenv import load_dotenv
+load_dotenv()
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-7$7$h36n)m6&$8q9uck@uctj=jq6^22hm&@68_-9vdat=@a-3!'
-
+SECRET_KEY = os.environ.get("SECRET_KEY")
+#'django-insecure-7$7$h36n)m6&$8q9uck@uctj=jq6^22hm&@68_-9vdat=@a-3!'
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['127.0.0.1','localhost','074ccca59006.ngrok-free.app']
-
+DEBUG = os.environ.get("DEBUG","False").lower()=="true"
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS","").split(" ")
+#['127.0.0.1','localhost','074ccca59006.ngrok-free.app']
 CSRF_TRUSTED_ORIGINS = [
     "https://80e8-185-252-220-125.ngrok-free.app",
 ]
@@ -76,9 +77,8 @@ MIDDLEWARE = [
 CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-    "http://127.0.0.1:3000",
+    "https://your-frontend-domain.com",
 ]
-
 ROOT_URLCONF = 'e.urls'
 
 TEMPLATES = [
@@ -102,13 +102,35 @@ WSGI_APPLICATION = 'e.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# DATABASES = {
+#         'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#      }
+# }
+# database_url=os.environ.get("DATABASE_URL")
+# DATABASES["default"]=dj_database_url.parse(database_url)
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
+# DATABASES = {
 
+#     "default": {
+
+#         "ENGINE": "django.db.backends.postgresql",
+
+#         "NAME": "estore-drf-render",
+
+#         "USER": "dbstore_mrfa_user",
+
+#         "PASSWORD": "yHBjzEjAuhvB3z5WLFweBWo1obdcQVlk",
+
+#         "HOST": "dpg-d1og6qidbo4c73b1ij7g-a",
+
+#         "PORT": "5432",
+
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
