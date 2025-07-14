@@ -25,10 +25,10 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')  
     price = models.DecimalField(max_digits=10, decimal_places=2)
     in_stock = models.BooleanField(default=True)
-    image1 = models.ImageField(upload_to='products/')
-    image2 = models.ImageField(upload_to='products/', blank=True)
-    image3 = models.ImageField(upload_to='products/', blank=True)
-    image4 = models.ImageField(upload_to='products/', blank=True)
+    image1 = models.ImageField(upload_to='products/media')
+    image2 = models.ImageField(upload_to='products/media', blank=True)
+    image3 = models.ImageField(upload_to='products/media', blank=True)
+    image4 = models.ImageField(upload_to='products/media', blank=True)
 
 class Wishlist(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
