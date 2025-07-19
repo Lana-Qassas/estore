@@ -11,6 +11,12 @@ class ProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['name', 'category']
+    
+    def get_queryset(self):
+        return Product.objects.annotate(
+            avg_rating=Avg('ratings__stars')
+        ).order_by('-avg_rating')
+    
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
 

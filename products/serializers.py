@@ -68,6 +68,7 @@ class CartSerializer(serializers.ModelSerializer):
         total = self.get_total_before_discount(obj)
         discount = self.get_discount(obj)
         return total * (Decimal('1') - Decimal(str(discount)) / Decimal('100'))
+    
 class RatingSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     class Meta:
