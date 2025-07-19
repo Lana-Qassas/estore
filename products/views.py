@@ -32,7 +32,10 @@ class CategoryViewSet(viewsets.ModelViewSet):
         except Category.DoesNotExist:
             return Response({"detail": "Category not found."}, status=status.HTTP_404_NOT_FOUND)
 
-        products = Product.objects.filter(category=category)
+        products = Product.objects.filter(category=category).annotate(
+            avg_rating=Avg('ratings__stars')
+        ).order_by('-avg_rating')
+        
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data)
 
