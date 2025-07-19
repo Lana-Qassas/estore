@@ -7,9 +7,11 @@ class CustomUserAdmin(UserAdmin):
     model = User
     list_display = ['email', 'username', 'first_name', 'last_name', 'is_staff']
     ordering = ('email',)
+    
     fieldsets = UserAdmin.fieldsets + (
-        (None, {'fields': ('phone_number',)}),
+        (None, {'fields': ('phone_number', 'date_of_birth')}),
     )
+
     add_fieldsets = UserAdmin.add_fieldsets + (
-        (None, {'fields': ('phone_number',)}),
+        (None, {'fields': ('phone_number', 'date_of_birth')}),
     )
